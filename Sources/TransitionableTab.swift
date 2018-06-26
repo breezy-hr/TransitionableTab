@@ -71,6 +71,12 @@ private extension TransitionableTab {
     func addFakeNavigationBarLayerIfNeeded(in tabBarController: UITabBarController, context: LayerContext) {
         guard let fakeNavigationBar = context.fakeNavigationBarLayer else { return }
         tabBarController.view.layer.addSublayer(fakeNavigationBar)
+		if let snapshotLayer = context.fakeLayer?.sublayers?.first {
+			var newFrame = snapshotLayer.frame
+			newFrame.origin.y += fakeNavigationBar.bounds.height
+			snapshotLayer.frame = newFrame
+		}
+		
     }
     
     func animate(context: LayerContext, direction: Direction) {
